@@ -10,9 +10,9 @@ const addAdmin = async (req, res) => {
         admin = req.body
         if(admin.mot_passe || admin.status == "V" ){
             const hashedPassword = await bcrypt.hash(admin.mot_passe, 10);
-            admin.password = hashedPassword;
+            admin.mot_passe = hashedPassword;
             admin = await Utilisateur.create(admin)
-            const token = newUser.generateAuthToken()
+            const token = admin.generateAuthToken()
             res.status(201).json({ admin, token })
         }else{
             console.error('doit ajouter un admin avec son mot de passe :', error);
